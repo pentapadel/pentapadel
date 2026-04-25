@@ -1915,6 +1915,12 @@ window.editarRes=(tid,pid)=>{
       if(g1new>g2new){par[pOld.p1].pts+=2;par[pOld.p1].wins++;}
       else{par[pOld.p2].pts+=2;par[pOld.p2].wins++;}
 
+      // Si ganador cambió en fase elim, limpiar resultados siguientes en cascada
+      const oldWin=pOld.g1>pOld.g2?pOld.p1:pOld.p2;
+      const newWin=g1new>g2new?pOld.p1:pOld.p2;
+      if(oldWin!==newWin&&pOld.fase!=='Clasificación'&&pOld.nextPid!=null){
+        clearElimChain(ps,par,pOld.nextPid);
+      }
       // Propagar nuevo ganador si hay siguiente ronda
       propagateWinner(ps, ps[idx], g1new>g2new?pOld.p1:pOld.p2);
 
@@ -2372,6 +2378,24 @@ window.tvSwitch = (fase) => {
   else renderTVBracket(t);
 };
 
+// ── Limpia en cascada resultados eliminatorios cuando cambia el ganador ──
+function clearElimChain(ps, par, pid) {
+  const idx=ps.findIndex(x=>x.id===pid); if(idx<0) return;
+  const p=ps[idx];
+  if(p.jugado){
+    if(p.p1!=null){par[p.p1].played--;par[p.p1].gf-=p.g1;par[p.p1].gc-=p.g2;}
+    if(p.p2!=null){par[p.p2].played--;par[p.p2].gf-=p.g2;par[p.p2].gc-=p.g1;}
+    if(p.g1>p.g2){if(p.p1!=null){par[p.p1].pts-=2;par[p.p1].wins--;}}
+    else{if(p.p2!=null){par[p.p2].pts-=2;par[p.p2].wins--;}}
+    ps[idx]={...ps[idx],g1:null,g2:null,jugado:false};
+  }
+  if(p.nextPid!=null){
+    const ni=ps.findIndex(x=>x.id===p.nextPid);
+    if(ni>=0){ps[ni]={...ps[ni],[p.nextSlot]:null,tbd:true};}
+    clearElimChain(ps,par,p.nextPid);
+  }
+}
+
 // ── Propaga ganador al slot vacío de siguiente ronda ──
 function propagateWinner(ps, finishedMatch, winnerIdx) {
   if (finishedMatch.nextPid==null) return;
@@ -2657,6 +2681,10 @@ function renderTVBracket(t) {
     if (p && !p.jugado && activo && p.p1!=null && p.p2!=null) {
       inp = `<div style="display:flex;align-items:center;gap:4px;padding:6px 11px;background:rgba(0,0,0,.2)">
         ${tvInpBlock(t.id, p.id)}
+      </div>`;
+    } else if (p && p.jugado && activo) {
+      inp = `<div style="display:flex;justify-content:center;padding:6px 11px;background:rgba(0,0,0,.2);border-top:1px solid rgba(255,255,255,.06)">
+        <button onclick="editarRes('${t.id}',${p.id})" style="background:rgba(74,158,255,.15);border:1px solid rgba(74,158,255,.3);border-radius:6px;color:#4a9eff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;padding:5px 14px;cursor:pointer;letter-spacing:.3px">✏️ Corregir</button>
       </div>`;
     }
     return `<div style="background:rgba(14,29,53,.95);border:1px solid ${border};border-radius:9px;overflow:hidden;box-shadow:${shadow};width:100%">
