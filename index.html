@@ -2005,6 +2005,12 @@ window.avanzarFase=(tid)=>{
   const clasifPs = t.partidos.filter(p=>p.fase==='Clasificación');
   const yaJugaron=(a,b)=>clasifPs.some(p=>(p.p1===a&&p.p2===b)||(p.p1===b&&p.p2===a));
 
+  // Índices bloqueados: byes (van directo a Cuartos) y play-in top (son teamA en Octavos)
+  // Ninguno de estos puede aparecer como rival en Octavos
+  const noRivalesIdx=new Set();
+  for(let pos=0;pos<nByes;pos++) if(sorted[pos]) noRivalesIdx.add(sorted[pos].idx);
+  octPosList.forEach(pos=>{ if(sorted[pos]) noRivalesIdx.add(sorted[pos].idx); });
+
   // Generar partidos octavos en orden visual con anti-repetición
   // Cada play-in: sorted[pos] vs alguien desde el fondo que NO haya jugado ya contra él
   octPosList.forEach((pos)=>{
@@ -2019,6 +2025,7 @@ window.avanzarFase=(tid)=>{
       if(candidatePos<0||candidatePos>=N) continue;
       const candidate=sorted[candidatePos]?.idx??null;
       if(candidate===null||candidate===teamA) continue;
+      if(noRivalesIdx.has(candidate)) continue; // nunca byes ni play-in top como rival
       // Verificar que este candidato no esté ya asignado a otro octavo
       const yaAsignado=ps.some(p=>p.fase==='Octavos'&&(p.p1===candidate||p.p2===candidate));
       if(yaAsignado) continue;
