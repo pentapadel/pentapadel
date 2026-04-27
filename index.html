@@ -2001,36 +2001,34 @@ window.avanzarFase=(tid)=>{
     if(pos<nByes && sorted[pos]) qfData[sm.qi][sm.sl]=sorted[pos].idx;
   }
 
-  // ── Anti-repetición: rivales pre-asignados como array (garantiza bijección 1-a-1) ──
+  // ── Matching óptimo: permutaciones de bottomHalf ──
   const clasifPs = t.partidos.filter(p=>p.fase==='Clasificación');
   const yaJugaron=(a,b)=>clasifPs.some(p=>(p.p1===a&&p.p2===b)||(p.p1===b&&p.p2===a));
 
-  // Asignación natural: rivals[k] = sorted[N-1-k] (mejor top vs peor rival)
-  // k=0 → sorted[nByes] vs sorted[N-1], k=1 → sorted[nByes+1] vs sorted[N-2], etc.
-  const rivals=[];
-  for(let k=0;k<nPlayIn;k++) rivals.push(sorted[N-1-k]?.idx??null);
+  // topHalf: mejores del play-in (sorted[nByes..nByes+nPlayIn-1])
+  // bottomHalf: peores del play-in invertidos (sorted[N-1..nByes+nPlayIn])
+  const topHalf=[];
+  for(let k=0;k<nPlayIn;k++) topHalf.push(sorted[nByes+k]?.idx??null);
+  const bottomHalf=[];
+  for(let k=0;k<nPlayIn;k++) bottomHalf.push(sorted[N-1-k]?.idx??null);
 
-  // Swaps para evitar repeticiones de clasificación en Octavos
-  // Los swaps preservan la bijección: cada rival aparece exactamente una vez
-  for(let k=0;k<nPlayIn;k++){
-    const topK=sorted[nByes+k]?.idx??null;
-    if(topK===null||rivals[k]===null) continue;
-    if(!yaJugaron(topK,rivals[k])) continue;
-    // Buscar el mejor swap que reduzca conflictos totales
-    let bestJ=-1,bestTotal=Infinity;
-    for(let j=k+1;j<nPlayIn;j++){
-      if(rivals[j]===null) continue;
-      const topJ=sorted[nByes+j]?.idx??null;
-      const conflK=yaJugaron(topK,rivals[j])?1:0;
-      const conflJ=topJ!==null&&yaJugaron(topJ,rivals[k])?1:0;
-      const curJ=topJ!==null&&yaJugaron(topJ,rivals[j])?1:0;
-      // Solo hacer swap si mejora el total (antes: 1+curJ, después: conflK+conflJ)
-      if(conflK+conflJ<1+curJ && conflK+conflJ<bestTotal){
-        bestTotal=conflK+conflJ; bestJ=j;
-      }
+  // Generar todas las permutaciones de bottomHalf y elegir la que minimice repeticiones
+  // En empate, gana la primera (orden natural: mejor top vs peor bottom)
+  function getPerms(arr){
+    if(arr.length<=1) return [arr.slice()];
+    const res=[];
+    for(let i=0;i<arr.length;i++){
+      const rest=[...arr.slice(0,i),...arr.slice(i+1)];
+      getPerms(rest).forEach(p=>res.push([arr[i],...p]));
     }
-    if(bestJ>=0)[rivals[k],rivals[bestJ]]=[rivals[bestJ],rivals[k]];
+    return res;
   }
+  let bestPerm=null,bestConflicts=Infinity;
+  getPerms(bottomHalf).forEach(perm=>{
+    const c=perm.reduce((s,rival,k)=>s+(topHalf[k]!=null&&rival!=null&&yaJugaron(topHalf[k],rival)?1:0),0);
+    if(c<bestConflicts){bestConflicts=c;bestPerm=perm;}
+  });
+  const rivals=bestPerm||bottomHalf.slice();
 
   // Generar partidos de Octavos (cada rival usado exactamente una vez, sin duplicados)
   octPosList.forEach((pos)=>{
