@@ -1799,32 +1799,32 @@ window.togglePresente=(tid,pIdx)=>{
       return {count:cnt, rivales:new Set(nuevosPs.filter(p=>p.p1===i||p.p2===i).map(p=>p.p1===i?p.p2:p.p1))};
     });
 
-    // Generar partidos faltantes (cada uno necesita 2 partidos de clasif)
+    // Generar partidos faltantes con backtracking (garantiza fixture completo)
     const extras=[];
-    for(let i=0;i<totalParejas;i++){
-      for(let k=i+1;k<totalParejas;k++){
-        const key=`${i}-${k}`;
-        if(!yaScheduled.has(key) && played[i].count<2 && played[k].count<2 && !played[i].rivales.has(k)){
-          extras.push({id:nextPid++,fase:'Clasificación',p1:i,p2:k,g1:null,g2:null,jugado:false});
-          played[i].count++;played[k].count++;
-          played[i].rivales.add(k);played[k].rivales.add(i);
-          yaScheduled.add(key);
+    const needList=[];
+    for(let i=0;i<totalParejas;i++) if(played[i].count<2) needList.push(i);
+    function tryMatch(ni){
+      while(ni<needList.length&&played[needList[ni]].count>=2) ni++;
+      if(ni>=needList.length) return true;
+      const a=needList[ni];
+      for(let pass=0;pass<2;pass++){
+        for(let nj=ni+1;nj<needList.length;nj++){
+          const b=needList[nj];
+          if(played[b].count>=2) continue;
+          const key=`${Math.min(a,b)}-${Math.max(a,b)}`;
+          if(yaScheduled.has(key)) continue;
+          if(pass===0&&played[a].rivales.has(b)) continue;
+          extras.push({id:nextPid,fase:'Clasificación',p1:a,p2:b,g1:null,g2:null,jugado:false});
+          nextPid++;played[a].count++;played[b].count++;
+          played[a].rivales.add(b);played[b].rivales.add(a);yaScheduled.add(key);
+          if(tryMatch(ni+1)) return true;
+          extras.pop();nextPid--;played[a].count--;played[b].count--;
+          played[a].rivales.delete(b);played[b].rivales.delete(a);yaScheduled.delete(key);
         }
       }
+      return false;
     }
-    // Segunda pasada para los que aún faltan un partido
-    for(let i=0;i<totalParejas;i++){
-      for(let k=0;k<totalParejas&&played[i].count<2;k++){
-        if(k===i) continue;
-        const key=`${Math.min(i,k)}-${Math.max(i,k)}`;
-        if(!yaScheduled.has(key)&&played[k].count<2&&!played[i].rivales.has(k)){
-          extras.push({id:nextPid++,fase:'Clasificación',p1:i,p2:k,g1:null,g2:null,jugado:false});
-          played[i].count++;played[k].count++;
-          played[i].rivales.add(k);played[k].rivales.add(i);
-          yaScheduled.add(key);
-        }
-      }
-    }
+    tryMatch(0);
     nuevosPs=[...nuevosPs,...extras];
     toast(`✅ ¡Todos llegaron! Fixture completo generado (${nuevosPs.length} partidos)`);
   }
