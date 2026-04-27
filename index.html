@@ -2001,45 +2001,47 @@ window.avanzarFase=(tid)=>{
     if(pos<nByes && sorted[pos]) qfData[sm.qi][sm.sl]=sorted[pos].idx;
   }
 
-  // ── Rivales ya enfrentados en clasificación ──
+  // ── Anti-repetición: rivales pre-asignados como array (garantiza bijección 1-a-1) ──
   const clasifPs = t.partidos.filter(p=>p.fase==='Clasificación');
   const yaJugaron=(a,b)=>clasifPs.some(p=>(p.p1===a&&p.p2===b)||(p.p1===b&&p.p2===a));
 
-  // Índices bloqueados: byes (van directo a Cuartos) y play-in top (son teamA en Octavos)
-  // Ninguno de estos puede aparecer como rival en Octavos
-  const noRivalesIdx=new Set();
-  for(let pos=0;pos<nByes;pos++) if(sorted[pos]) noRivalesIdx.add(sorted[pos].idx);
-  octPosList.forEach(pos=>{ if(sorted[pos]) noRivalesIdx.add(sorted[pos].idx); });
+  // Asignación natural: rivals[k] = sorted[N-1-k] (mejor top vs peor rival)
+  // k=0 → sorted[nByes] vs sorted[N-1], k=1 → sorted[nByes+1] vs sorted[N-2], etc.
+  const rivals=[];
+  for(let k=0;k<nPlayIn;k++) rivals.push(sorted[N-1-k]?.idx??null);
 
-  // Generar partidos octavos en orden visual con anti-repetición
-  // Cada play-in: sorted[pos] vs alguien desde el fondo que NO haya jugado ya contra él
+  // Swaps para evitar repeticiones de clasificación en Octavos
+  // Los swaps preservan la bijección: cada rival aparece exactamente una vez
+  for(let k=0;k<nPlayIn;k++){
+    const topK=sorted[nByes+k]?.idx??null;
+    if(topK===null||rivals[k]===null) continue;
+    if(!yaJugaron(topK,rivals[k])) continue;
+    // Buscar el mejor swap que reduzca conflictos totales
+    let bestJ=-1,bestTotal=Infinity;
+    for(let j=k+1;j<nPlayIn;j++){
+      if(rivals[j]===null) continue;
+      const topJ=sorted[nByes+j]?.idx??null;
+      const conflK=yaJugaron(topK,rivals[j])?1:0;
+      const conflJ=topJ!==null&&yaJugaron(topJ,rivals[k])?1:0;
+      const curJ=topJ!==null&&yaJugaron(topJ,rivals[j])?1:0;
+      // Solo hacer swap si mejora el total (antes: 1+curJ, después: conflK+conflJ)
+      if(conflK+conflJ<1+curJ && conflK+conflJ<bestTotal){
+        bestTotal=conflK+conflJ; bestJ=j;
+      }
+    }
+    if(bestJ>=0)[rivals[k],rivals[bestJ]]=[rivals[bestJ],rivals[k]];
+  }
+
+  // Generar partidos de Octavos (cada rival usado exactamente una vez, sin duplicados)
   octPosList.forEach((pos)=>{
     const k=pos-nByes;
     const teamA=sorted[pos]?.idx??null;
     const sm=slotMap[pos];
-
-    // Buscar rival desde el fondo sin repetir rival de clasificación
-    let rivalIdx=null;
-    for(let attempt=0; attempt<N; attempt++){
-      const candidatePos=N-1-k-attempt;
-      if(candidatePos<0||candidatePos>=N) continue;
-      const candidate=sorted[candidatePos]?.idx??null;
-      if(candidate===null||candidate===teamA) continue;
-      if(noRivalesIdx.has(candidate)) continue; // nunca byes ni play-in top como rival
-      // Verificar que este candidato no esté ya asignado a otro octavo
-      const yaAsignado=ps.some(p=>p.fase==='Octavos'&&(p.p1===candidate||p.p2===candidate));
-      if(yaAsignado) continue;
-      // Preferir rival que no haya jugado ya contra teamA en clasificación
-      if(!yaJugaron(teamA,candidate)){rivalIdx=candidate;break;}
-      // Si todos jugaron ya, tomar de todas formas (fallback)
-      if(rivalIdx===null) rivalIdx=candidate;
-    }
-
     ps.push({
       id:octPidMap[pos],
       fase:'Octavos',
       p1:teamA,
-      p2:rivalIdx,
+      p2:rivals[k],
       g1:null,g2:null,jugado:false,tbd:false,
       nextPid:qfIds[sm.qi],
       nextSlot:sm.sl
