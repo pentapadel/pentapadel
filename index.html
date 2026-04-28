@@ -253,29 +253,55 @@ details:not([open]) .tc-arrow{display:inline-block}
 #tv-overlay > *{position:relative;z-index:1}
 
 /* TV Header */
-.tv-hdr{height:68px;background:rgba(5,12,24,.97);border-bottom:2px solid rgba(181,229,42,.18);display:flex;align-items:center;gap:14px;padding:0 28px;flex-shrink:0;box-shadow:0 4px 32px rgba(0,0,0,.6)}
-.tv-hdr-back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--gray2);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:7px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s}
+.tv-hdr{height:56px;background:rgba(5,12,24,.97);border-bottom:2px solid rgba(181,229,42,.18);display:flex;align-items:center;gap:12px;padding:0 20px;flex-shrink:0;box-shadow:0 4px 32px rgba(0,0,0,.6)}
+.tv-hdr-back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:var(--gray2);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:5px 10px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s}
 .tv-hdr-back:hover{color:var(--white);border-color:var(--gray)}
-.tv-logo-img{height:40px;width:40px;object-fit:contain;border-radius:8px;flex-shrink:0;box-shadow:0 0 16px rgba(181,229,42,.2)}
-.tv-hdr-name{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--lime);flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 16px;letter-spacing:2px;text-shadow:0 0 30px rgba(181,229,42,.35)}
-.live-pill{display:flex;align-items:center;gap:5px;background:rgba(255,64,96,.1);border:1px solid rgba(255,64,96,.3);border-radius:20px;padding:4px 12px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.8px;color:#ff6080}
+.tv-logo-img{height:36px;width:36px;object-fit:contain;border-radius:8px;flex-shrink:0;box-shadow:0 0 16px rgba(181,229,42,.2)}
+.tv-hdr-name{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--lime);flex:1;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 12px;letter-spacing:2px;text-shadow:0 0 30px rgba(181,229,42,.35)}
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(255,64,96,.1);border:1px solid rgba(255,64,96,.3);border-radius:20px;padding:3px 10px;font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.8px;color:#ff6080}
 .ldot{width:6px;height:6px;border-radius:50%;background:#ff4060;animation:pulse 1.5s infinite}
 
-/* TV fase switcher */
-.tv-fase-bar{height:40px;background:rgba(6,14,28,.85);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 24px;gap:4px;flex-shrink:0;overflow-x:auto}
-.tv-fase-btn{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:6px 14px;cursor:pointer;white-space:nowrap;transition:all .2s;height:40px;margin-bottom:-1px}
-.tv-fase-btn:hover{color:var(--white)}
-.tv-fase-btn.active{color:var(--lime);border-bottom-color:var(--lime)}
-.tv-fase-btn.gold{color:rgba(245,197,66,.5)}
-.tv-fase-btn.gold.active{color:var(--gold);border-bottom-color:var(--gold)}
-.tv-finalizar-btn{background:var(--gold);border:none;border-radius:8px;color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:12px;letter-spacing:.5px;text-transform:uppercase;padding:7px 16px;cursor:pointer;margin-left:auto}
+/* TV action bar */
+.tv-fase-bar{height:30px;background:rgba(6,14,28,.9);border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;padding:0 16px;gap:8px;flex-shrink:0}
+.tv-finalizar-btn{border:none;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;letter-spacing:.5px;text-transform:uppercase;padding:4px 14px;cursor:pointer;background:var(--gold);color:var(--navy)}
 
 /* TV body */
 .tv-body{flex:1;overflow:hidden;padding:0;min-height:0;position:relative}
-.tv-body-scroll{overflow:auto;padding:16px 20px;height:100%;box-sizing:border-box}
 
-/* ── CLASIFICACION LAYOUT ── */
-.tv-clasif{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:100%;min-height:400px}
+/* ── Split layout: 40% left / 60% right ── */
+.tv-split{display:flex;width:100%;height:100%;overflow:hidden}
+.tv-left-panel{width:40%;height:100%;display:flex;flex-direction:column;border-right:1px solid rgba(181,229,42,.12);padding:6px 8px;box-sizing:border-box;gap:5px;overflow:hidden}
+.tv-right-panel{flex:1;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+
+/* ── Compact standings ── */
+.tv-std-section{flex-shrink:0}
+.tv-section-title{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--lime);padding:0 2px 3px;border-bottom:1px solid rgba(181,229,42,.2);margin-bottom:2px}
+.tv-std-row{display:flex;align-items:center;gap:3px;padding:2px 2px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:13px;line-height:1.25}
+.tv-std-row.clasifica{background:rgba(181,229,42,.05)}
+.tv-std-sep{height:1px;background:rgba(181,229,42,.4);margin:2px 0}
+.tv-std-num{font-weight:900;min-width:16px;text-align:center;font-size:13px}
+.tv-std-num.r1{color:var(--gold)}.tv-std-num.r2{color:var(--silver)}.tv-std-num.r3{color:var(--bronze)}.tv-std-num.rn{color:var(--gray)}
+.tv-std-name{flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0 3px}
+.tv-std-pts{font-weight:900;font-size:15px;color:var(--lime);min-width:22px;text-align:right}
+.tv-std-dif{font-weight:600;font-size:11px;min-width:26px;text-align:right}
+
+/* ── Compact matches ── */
+.tv-matches-section{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.tv-match-list{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.tv-match-list::-webkit-scrollbar{width:2px}
+.tv-match-list::-webkit-scrollbar-thumb{background:rgba(181,229,42,.2);border-radius:2px}
+.tv-m-row{display:flex;align-items:center;gap:3px;padding:2px 3px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-size:12px;line-height:1.2}
+.tv-m-row.jugado{background:rgba(181,229,42,.04)}
+.tv-m-row.listo{background:rgba(37,211,102,.06);border-left:2px solid rgba(37,211,102,.5)}
+.tv-m-name{flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tv-m-name.win{color:var(--lime)}
+.tv-m-name.right{text-align:right}
+.tv-m-score{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;min-width:36px;text-align:center;letter-spacing:1px;color:var(--white);flex-shrink:0}
+.tv-m-score.pending{font-size:10px;font-weight:500;color:var(--gray);letter-spacing:0}
+.tv-turno-hdr{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:2px 3px 1px;flex-shrink:0;margin-top:2px}
+
+/* Bracket glow */
+@keyframes tvglow{from{box-shadow:0 0 18px rgba(245,197,66,.1)}to{box-shadow:0 0 40px rgba(245,197,66,.25)}}
 
 /* ════════════════════════════════
    RESPONSIVE — completo
@@ -283,7 +309,6 @@ details:not([open]) .tc-arrow{display:inline-block}
 
 /* ── Tablet ── */
 @media(max-width:860px){
-  .tv-clasif{grid-template-columns:1fr}
   main{padding:16px 10px 80px}
   .builder-cols{grid-template-columns:1fr}
   .srow{grid-template-columns:repeat(2,1fr)}
@@ -377,7 +402,6 @@ details:not([open]) .tc-arrow{display:inline-block}
   .tv-hdr{padding:0 8px;gap:6px;height:46px;flex-wrap:nowrap}
   .tv-hdr-name{font-size:13px;padding:0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
   .tv-fase-bar{padding:0 6px;gap:4px;flex-wrap:nowrap;overflow-x:auto}
-  .tv-fase-btn{font-size:9px;padding:4px 7px;white-space:nowrap;flex-shrink:0}
   .tv-logo-img{height:28px!important;width:28px!important}
 
   /* Gestor de parejas */
@@ -388,72 +412,6 @@ details:not([open]) .tc-arrow{display:inline-block}
   /* Wip display */
   .wip-slot{padding:8px 10px;font-size:12px}
 }
-.tv-panel{background:rgba(14,29,53,.9);border:1px solid rgba(181,229,42,.15);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;backdrop-filter:blur(4px)}
-.tv-panel-hdr{padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.07);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--lime);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.tv-panel-body{overflow-y:auto;flex:1}
-
-/* Posiciones */
-.pos-row{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);transition:background .3s}
-.pos-row.clasifica{background:rgba(181,229,42,.05)}
-.pos-num{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;min-width:34px;text-align:center}
-.pos-num.r1{color:var(--gold)}.pos-num.r2{color:var(--silver)}.pos-num.r3{color:var(--bronze)}.pos-num.rn{color:var(--gray)}
-.pos-name{flex:1;font-weight:700;font-size:15px;margin:0 12px}
-.pos-stats{display:flex;gap:16px}
-.ps{text-align:center}
-.ps-v{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;line-height:1}
-.ps-l{font-size:8px;color:var(--gray);text-transform:uppercase;letter-spacing:.3px}
-.pos-pts{font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--lime);min-width:38px;text-align:right}
-.clasif-tag{font-size:8px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--lime);border:1px solid rgba(181,229,42,.3);border-radius:8px;padding:2px 6px;margin-left:6px;white-space:nowrap}
-.clasif-divider{height:2px;background:linear-gradient(90deg,rgba(181,229,42,.5),transparent);margin:0}
-
-/* Partidos lista */
-.plist-row{display:flex;align-items:center;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;gap:8px}
-.plist-left{flex:1;font-weight:600;text-align:right}
-.plist-right{flex:1;font-weight:600}
-.plist-left.win,.plist-right.win{color:var(--lime)}
-.plist-score{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;letter-spacing:2px;min-width:64px;text-align:center;color:var(--white)}
-.plist-score.pending{font-size:11px;color:var(--gray);letter-spacing:0}
-
-/* ── BRACKET TENIS — slots individuales con líneas ── */
-.bracket-wrap{display:flex;align-items:center;justify-content:center;min-height:100%;padding:12px 0;overflow:auto}
-.bracket-inner{display:flex;align-items:center;gap:0;min-width:max-content}
-
-/* Columna de fase */
-.br-col{display:flex;flex-direction:column;justify-content:space-around;gap:0;min-width:0}
-.br-col-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;text-align:center;padding:5px 8px;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.06)}
-
-/* Slot individual (un equipo) */
-.br-slot{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(15,32,64,.92);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:600;line-height:1.2;transition:all .2s;min-height:36px;backdrop-filter:blur(4px)}
-.br-slot.win{background:rgba(181,229,42,.12);border-color:rgba(181,229,42,.35);color:var(--lime)}
-.br-slot.loss{opacity:.45;text-decoration:line-through}
-.br-slot.tbd{color:var(--gray);font-style:italic;font-weight:400}
-.br-slot-score{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;min-width:20px;text-align:right;margin-left:8px}
-.br-slot.win .br-slot-score{color:var(--lime)}
-
-/* Par de slots (un match) */
-.br-match-wrap{display:flex;flex-direction:column;margin:4px 0}
-.br-slot:first-child{border-bottom:none;border-radius:6px 6px 0 0}
-.br-slot:last-child{border-top:1px solid rgba(255,255,255,.06);border-radius:0 0 6px 6px}
-
-/* Bloque de input para score */
-.br-inp-row{display:flex;align-items:center;gap:4px;padding:5px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(181,229,42,.15);border-top:none;border-radius:0 0 6px 6px}
-
-/* Conector horizontal */
-.br-conn-h{width:16px;border-top:1px solid rgba(74,158,255,.3);flex-shrink:0;align-self:center}
-
-/* Conector vertical (par de matches → siguiente ronda) */
-.br-vconn{display:flex;flex-direction:column;align-self:stretch;width:20px;flex-shrink:0}
-.br-vconn-top{flex:1;border-right:1px solid rgba(74,158,255,.3);border-bottom:1px solid rgba(74,158,255,.3);border-radius:0 0 5px 0}
-.br-vconn-bot{flex:1;border-right:1px solid rgba(74,158,255,.3);border-radius:0 5px 0 0}
-
-/* Final — centro */
-.br-final-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:200px;padding:0 12px}
-.br-campeon{background:linear-gradient(135deg,rgba(245,197,66,.15),rgba(245,197,66,.03));border:1.5px solid rgba(245,197,66,.4);border-radius:14px;padding:18px 16px;text-align:center;animation:tvglow 2s ease infinite alternate;width:190px}
-@keyframes tvglow{from{box-shadow:0 0 18px rgba(245,197,66,.1)}to{box-shadow:0 0 40px rgba(245,197,66,.25)}}
-.br-camp-crown{font-size:38px;margin-bottom:4px}
-.br-camp-lbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
-.br-camp-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--white);line-height:1.1}
-.br-final-lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);text-align:center}
 </style>
 </head>
 <body>
@@ -2322,6 +2280,11 @@ window.cerrarTV = () => {
   tvTid = null;
 };
 
+// Abrevia nombre de pareja: "GARCIA / LOPEZ" → "GARC-LOPE"
+function abbr(nombre) {
+  return nombre.split('/').map(s => s.trim().substring(0, 4).toUpperCase()).join('-');
+}
+
 function renderTV() {
   if (!tvTid) return;
   const raw = torneos[tvTid];
@@ -2329,36 +2292,37 @@ function renderTV() {
   const t = normT(raw, tvTid);
   document.getElementById('tv-nombre').textContent = t.nombre;
   renderTVFaseBar(t);
-  if (tvFase === 'clasificacion') renderTVClasif(t);
-  else renderTVBracket(t);
+  const hasBracket = t.partidos.some(p => p.fase !== 'Clasificación');
+  document.getElementById('tv-body').innerHTML = `
+    <div class="tv-split">
+      <div class="tv-left-panel">${buildTVLeft(t)}</div>
+      <div class="tv-right-panel" id="tv-right-panel">${!hasBracket ?
+        `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--gray);height:100%">
+          <div style="font-size:44px;opacity:.18">🏆</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;letter-spacing:.5px">CUADRO PENDIENTE</div>
+        </div>` : ''}</div>
+    </div>`;
+  if (hasBracket) renderTVBracket(t);
 }
 
 function renderTVFaseBar(t) {
   const hasBracket = t.partidos.some(p => p.fase !== 'Clasificación');
   const activo = t.estado === 'activo';
   const cD = t.fase==='clasificacion' && (t.presentes||[]).length===t.parejas.length && t.partidos.filter(p=>p.fase==='Clasificación').length>0 && t.partidos.filter(p=>p.fase==='Clasificación').every(p=>p.jugado);
-  const oD = t.fase==='octavos'       && t.partidos.filter(p=>p.fase==='Octavos').every(p=>p.jugado);
-  const qD = t.fase==='cuartos'       && t.partidos.filter(p=>p.fase==='Cuartos').every(p=>p.jugado);
-  const sD = t.fase==='semis'         && t.partidos.filter(p=>p.fase==='Semis').every(p=>p.jugado);
-  const fD = t.fase==='final'         && t.partidos.filter(p=>p.fase==='Final').every(p=>p.jugado);
-  const nextLbl = cD?(t.parejas.length>8?'Generar Octavos':'Generar Cuartos'):oD?'Generar Cuartos':qD?'Generar Semis':sD?'Generar Final':'';
+  const oD = t.fase==='octavos' && t.partidos.filter(p=>p.fase==='Octavos').every(p=>p.jugado);
+  const qD = t.fase==='cuartos' && t.partidos.filter(p=>p.fase==='Cuartos').every(p=>p.jugado);
+  const sD = t.fase==='semis'   && t.partidos.filter(p=>p.fase==='Semis').every(p=>p.jugado);
+  const fD = t.fase==='final'   && t.partidos.filter(p=>p.fase==='Final').every(p=>p.jugado);
   document.getElementById('tv-fase-bar').innerHTML = `
-    <button class="tv-fase-btn ${tvFase==='clasificacion'?'active':''}" onclick="tvSwitch('clasificacion')">📊 Clasificación</button>
-    ${hasBracket?`<button class="tv-fase-btn gold ${tvFase==='bracket'?'active':''}" onclick="tvSwitch('bracket')">🏆 Eliminatorias</button>`:''}
     <div style="flex:1"></div>
-    ${activo&&fD?`<button class="tv-finalizar-btn" onclick="finalizarTorneo('${t.id}')">🏆 Finalizar Torneo</button>`:''}
-    ${activo&&cD&&!hasBracket?`<button class="tv-finalizar-btn" style="background:var(--lime);color:var(--navy)" onclick="avanzarFase('${t.id}')">🏆 Generar Llaves</button>`:''}`;
+    ${activo&&fD ? `<button class="tv-finalizar-btn" onclick="finalizarTorneo('${t.id}')">🏆 Finalizar Torneo</button>` : ''}
+    ${activo&&cD&&!hasBracket ? `<button class="tv-finalizar-btn" style="background:var(--lime);color:var(--navy)" onclick="avanzarFase('${t.id}')">⚡ Generar Llaves</button>` : ''}
+    ${activo&&oD ? `<button class="tv-finalizar-btn" style="background:var(--lime);color:var(--navy)" onclick="avanzarFase('${t.id}')">⚡ Generar Cuartos</button>` : ''}
+    ${activo&&qD ? `<button class="tv-finalizar-btn" style="background:var(--lime);color:var(--navy)" onclick="avanzarFase('${t.id}')">⚡ Generar Semis</button>` : ''}
+    ${activo&&sD ? `<button class="tv-finalizar-btn" style="background:var(--lime);color:var(--navy)" onclick="avanzarFase('${t.id}')">⚡ Generar Final</button>` : ''}`;
 }
 
-window.tvSwitch = (fase) => {
-  tvFase = fase;
-  const raw = torneos[tvTid];
-  if (!raw) return;
-  const t = normT(raw, tvTid);
-  renderTVFaseBar(t);
-  if (fase === 'clasificacion') renderTVClasif(t);
-  else renderTVBracket(t);
-};
+window.tvSwitch = () => { renderTV(); };
 
 // ── Limpia en cascada resultados eliminatorios cuando cambia el ganador ──
 function clearElimChain(ps, par, pid) {
@@ -2446,348 +2410,238 @@ function tvInpBlock(tid, pid) {
   <button data-tid="${tid}" data-pid="${pid}" onclick="cargarResTV(this)" style="background:var(--lime);border:none;border-radius:5px;color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;padding:5px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:.3px;margin-left:4px">OK</button>`;
 }
 
-// ── CLASIFICACIÓN — con orden de descanso ──
-function renderTVClasif(t) {
-  // Stats SOLO de clasificación — con idx para referencia correcta
-  const clasifJugadosTV = t.partidos.filter(p=>p.fase==='Clasificación'&&p.jugado);
+// ── PANEL IZQUIERDO: clasificación compacta ──
+function buildTVLeft(t) {
+  const clasifJugados = t.partidos.filter(p=>p.fase==='Clasificación'&&p.jugado);
+  const clasifPsRaw = t.partidos.filter(p=>p.fase==='Clasificación');
+  const presentes = t.presentes || [];
+  const pj = clasifJugados.length, pt = clasifPsRaw.length;
+  const nClasif = t.parejas.length > 8 ? 8 : Math.min(4, t.parejas.length);
+  const activo = t.estado === 'activo';
+  const safeId = t.id.replace(/[^a-zA-Z0-9]/g, '_');
+
   const sorted = t.parejas.map((p,i)=>{
-    const mis = clasifJugadosTV.filter(m=>m.p1===i||m.p2===i);
-    let pts=0,gf=0,gc=0,wins=0,played=mis.length;
+    const mis = clasifJugados.filter(m=>m.p1===i||m.p2===i);
+    let pts=0,gf=0,gc=0,wins=0;
     mis.forEach(m=>{
       const esP1=m.p1===i;
       gf+=esP1?m.g1:m.g2; gc+=esP1?m.g2:m.g1;
-      const gano=esP1?m.g1>m.g2:m.g2>m.g1;
-      if(gano){pts+=2;wins++;}
+      if(esP1?m.g1>m.g2:m.g2>m.g1){pts+=2;wins++;}
     });
-    return {...p, idx:i, pts, gf, gc, wins, played}; // idx:i es clave para check-in
+    return {...p, idx:i, pts, gf, gc, wins, played:mis.length};
   }).sort((a,b)=>b.pts-a.pts||((b.gf-b.gc)-(a.gf-a.gc))||b.gf-a.gf);
-  const clasifPsRaw = t.partidos.filter(p=>p.fase==='Clasificación');
-  const presentes = t.presentes || [];
 
-  function ordenarConDescanso(partidos) {
-    const result = [], pendientes = [...partidos];
-    while (pendientes.length > 0) {
-      const ronda = [], usados = new Set(), restantes = [];
-      for (const p of pendientes) {
-        if (!usados.has(p.p1) && !usados.has(p.p2)) { ronda.push(p); usados.add(p.p1); usados.add(p.p2); }
-        else restantes.push(p);
-      }
-      if (ronda.length === 0 && restantes.length > 0) ronda.push(restantes.shift());
-      result.push(...ronda);
-      pendientes.length = 0; pendientes.push(...restantes);
-    }
-    return result;
-  }
-
-  // ── Ordenar partidos por orden de llegada ──
-  function ordenarPorLlegada(partidos, presentes) {
-    if(presentes.length < 2) return ordenarConDescanso(partidos);
-    const pendientes = partidos.filter(p=>!p.jugado);
-    const jugados    = partidos.filter(p=>p.jugado);
-    const usados     = new Set();
-    const ordenados  = [];
-    for(let i=0; i<presentes.length-1; i+=2){
-      const a=presentes[i], b=presentes[i+1];
-      const directo=pendientes.find(p=>!usados.has(p.id)&&((p.p1===a&&p.p2===b)||(p.p1===b&&p.p2===a)));
-      if(directo){ ordenados.push(directo); usados.add(directo.id); continue; }
-      const deA=pendientes.find(p=>!usados.has(p.id)&&(p.p1===a||p.p2===a));
-      if(deA){ ordenados.push(deA); usados.add(deA.id); }
-    }
-    if(presentes.length%2===1){
-      const ultimo=presentes[presentes.length-1];
-      const deUltimo=pendientes.find(p=>!usados.has(p.id)&&(p.p1===ultimo||p.p2===ultimo));
-      if(deUltimo){ ordenados.push(deUltimo); usados.add(deUltimo.id); }
-    }
-    const resto = ordenarConDescanso(pendientes.filter(p=>!usados.has(p.id)));
-    return [...ordenados, ...resto, ...jugados];
-  }
-
-  const clasifPs = presentes.length>=2
-    ? ordenarPorLlegada(clasifPsRaw, presentes)
-    : ordenarConDescanso(clasifPsRaw);
-  const pj = clasifPs.filter(p=>p.jugado).length;
-  const pt = clasifPs.length;
-  const nClasif = t.parejas.length > 8 ? 8 : Math.min(4, t.parejas.length);
-  const activo = t.estado === 'activo';
-  const nums = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','⑪','⑫','⑬','⑭','⑮','⑯'];
-
-  // ── Posiciones con check-in clickeable ──
-  const posHtml = sorted.map((p,i) => {
-    const realIdx = p.idx; // índice real en t.parejas
-    const isPresent = presentes.includes(realIdx);
-    const clasifica = i < nClasif;
-    const dif = p.gf - p.gc;
-    return `<div class="pos-row ${clasifica?'clasifica':''}" style="${isPresent?'background:rgba(37,211,102,.08);border-left:3px solid #25D366':''}">
-      <div class="pos-num ${i===0?'r1':i===1?'r2':i===2?'r3':'rn'}">${nums[i]||i+1}</div>
-      <div class="pos-name" style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-        <span>${p.nombre}</span>
-        ${activo?`<button onclick="togglePresente('${t.id}',${realIdx})" style="background:${isPresent?'#25D366':'rgba(255,255,255,.08)'};border:1px solid ${isPresent?'#25D366':'rgba(255,255,255,.2)'};border-radius:20px;padding:3px 10px;cursor:pointer;font-size:11px;font-weight:800;color:${isPresent?'#000':'rgba(255,255,255,.5)'};transition:all .2s;white-space:nowrap;flex-shrink:0">
-          ${isPresent?'✓ Llegó':'+ Check-in'}
-        </button>`:''}
-      </div>
-      <div class="pos-stats">
-        <div class="ps"><div class="ps-v">${p.played}</div><div class="ps-l">PJ</div></div>
-        <div class="ps"><div class="ps-v">${p.wins}</div><div class="ps-l">G</div></div>
-        <div class="ps"><div class="ps-v" style="color:${dif>0?'var(--lime)':dif<0?'var(--danger)':'var(--gray)'}">${dif>0?'+':''}${dif}</div><div class="ps-l">DIF</div></div>
-      </div>
-      <div class="pos-pts">${p.pts}</div>
-      ${clasifica?`<span class="clasif-tag">✓</span>`:''}
-    </div>${i===nClasif-1?'<div class="clasif-divider"></div>':''}`;
+  const stdHtml = sorted.map((p,i)=>{
+    const cl = i < nClasif, dif = p.gf-p.gc;
+    const pres = presentes.includes(p.idx);
+    const sep = i===nClasif ? '<div class="tv-std-sep"></div>' : '';
+    return `${sep}<div class="tv-std-row${cl?' clasifica':''}">
+      <span class="tv-std-num ${i===0?'r1':i===1?'r2':i===2?'r3':'rn'}">${i+1}</span>
+      <span style="width:5px;height:5px;border-radius:50%;background:${pres?'#4DFF91':'transparent'};flex-shrink:0;display:inline-block;margin:0 1px"></span>
+      <span class="tv-std-name">${abbr(p.nombre)}</span>
+      <span class="tv-std-dif" style="color:${dif>0?'rgba(181,229,42,.65)':dif<0?'rgba(255,80,80,.65)':'var(--gray)'}">${dif>0?'+':''}${dif}</span>
+      <span class="tv-std-pts">${p.pts}</span>
+    </div>`;
   }).join('');
 
-  // ── Partidos por turno con indicadores de presencia ──
-  // Usar el orden de llegada para armar los turnos
-  const turnos = [];
-  { const ordered = presentes.length>=2
-      ? ordenarPorLlegada(clasifPsRaw, presentes)
-      : ordenarConDescanso(clasifPsRaw);
-    const remaining = [...ordered.filter(p=>!p.jugado)];
-    const done = ordered.filter(p=>p.jugado);
-    while(remaining.length){
-      const ronda=[], usados=new Set(), rest=[];
-      for(const p of remaining){
-        if(!usados.has(p.p1)&&!usados.has(p.p2)){ ronda.push(p); usados.add(p.p1); usados.add(p.p2); }
-        else rest.push(p);
-      }
-      if(!ronda.length && rest.length) ronda.push(rest.shift());
-      turnos.push(ronda); remaining.length=0; remaining.push(...rest);
+  function ordenarConDescanso(ps) {
+    const res=[], pend=[...ps];
+    while(pend.length){
+      const ronda=[], us=new Set(), rest=[];
+      for(const p of pend){ if(!us.has(p.p1)&&!us.has(p.p2)){ronda.push(p);us.add(p.p1);us.add(p.p2);}else rest.push(p); }
+      if(!ronda.length&&rest.length) ronda.push(rest.shift());
+      res.push(...ronda); pend.length=0; pend.push(...rest);
     }
-    if(done.length) turnos.push(done);
+    return res;
   }
 
-  const partsHtml = turnos.map((ronda, ri) => {
-    const rows = ronda.map(p => {
-      const pa=t.parejas[p.p1], pb=t.parejas[p.p2];
-      const w1=p.jugado&&p.g1>p.g2, w2=p.jugado&&p.g2>p.g1;
-      const aPresent = presentes.includes(p.p1);
-      const bPresent = presentes.includes(p.p2);
-      const bothReady = !p.jugado && aPresent && bPresent;
+  function ordenarPorLlegada(ps, pres) {
+    if(pres.length<2) return ordenarConDescanso(ps);
+    const pendientes=ps.filter(p=>!p.jugado), jugados=ps.filter(p=>p.jugado);
+    const us=new Set(), ord=[];
+    for(let i=0;i<pres.length-1;i+=2){
+      const a=pres[i],b=pres[i+1];
+      const dir=pendientes.find(p=>!us.has(p.id)&&((p.p1===a&&p.p2===b)||(p.p1===b&&p.p2===a)));
+      if(dir){ord.push(dir);us.add(dir.id);continue;}
+      const deA=pendientes.find(p=>!us.has(p.id)&&(p.p1===a||p.p2===a));
+      if(deA){ord.push(deA);us.add(deA.id);}
+    }
+    if(pres.length%2===1){const ul=pres[pres.length-1];const deUl=pendientes.find(p=>!us.has(p.id)&&(p.p1===ul||p.p2===ul));if(deUl){ord.push(deUl);us.add(deUl.id);}}
+    return [...ord,...ordenarConDescanso(pendientes.filter(p=>!us.has(p.id))),...jugados];
+  }
 
-      const dot = (present) => `<span style="width:9px;height:9px;border-radius:50%;background:${present?'#25D366':'rgba(255,255,255,.15)'};display:inline-block;flex-shrink:0"></span>`;
+  const ordered = presentes.length>=2 ? ordenarPorLlegada(clasifPsRaw,presentes) : ordenarConDescanso(clasifPsRaw);
+  const turnos=[];
+  {const rem=[...ordered.filter(p=>!p.jugado)],done=ordered.filter(p=>p.jugado);
+   while(rem.length){const ronda=[],us=new Set(),rest=[];for(const p of rem){if(!us.has(p.p1)&&!us.has(p.p2)){ronda.push(p);us.add(p.p1);us.add(p.p2);}else rest.push(p);}if(!ronda.length&&rest.length)ronda.push(rest.shift());turnos.push(ronda);rem.length=0;rem.push(...rest);}
+   if(done.length)turnos.push(done);}
 
-      if (p.jugado) return `
-        <div class="plist-row" style="background:rgba(181,229,42,.03)">
-          <div class="plist-left ${w1?'win':''}" style="${w1?'':'opacity:.65'}">${pa.nombre}</div>
-          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-            <div class="plist-score">${p.g1} – ${p.g2}</div>
-            ${activo?`<button onclick="cancelarResTV('${t.id}',${p.id})" title="Cancelar resultado" style="background:rgba(255,80,80,.15);border:1px solid rgba(255,80,80,.3);border-radius:6px;color:#ff6060;font-size:11px;font-weight:800;padding:3px 8px;cursor:pointer;white-space:nowrap">✕</button>`:''}
-          </div>
-          <div class="plist-right ${w2?'win':''}" style="${w2?'':'opacity:.65'}">${pb.nombre}</div>
-        </div>`;
-
-      if (activo) return `
-        <div class="plist-row" style="gap:8px;flex-wrap:wrap;align-items:center;${bothReady?'background:rgba(37,211,102,.05);border-left:2px solid #25D366':''}">
-          <div class="plist-left" style="min-width:130px;display:flex;align-items:center;gap:6px">${dot(aPresent)}${pa.nombre}</div>
-          <div style="display:flex;align-items:center;gap:0;flex-shrink:0">
-            ${bothReady?`<span style="background:#25D366;color:#000;font-size:9px;font-weight:900;padding:2px 8px;border-radius:20px;margin-right:6px;white-space:nowrap">🟢 LISTO</span>`:''}
-            ${tvInpBlock(t.id, p.id)}
-          </div>
-          <div class="plist-right" style="min-width:130px;display:flex;align-items:center;justify-content:flex-end;gap:6px">${pb.nombre}${dot(bPresent)}</div>
-        </div>`;
-
-      return `
-        <div class="plist-row">
-          <div class="plist-left" style="display:flex;align-items:center;gap:6px">${dot(aPresent)}${pa.nombre}</div>
-          <div class="plist-score pending">pendiente</div>
-          <div class="plist-right" style="display:flex;align-items:center;justify-content:flex-end;gap:6px">${pb.nombre}${dot(bPresent)}</div>
-        </div>`;
-    }).join('');
-
-    const allDone = ronda.every(p=>p.jugado);
-    const anyReady = ronda.some(p=>!p.jugado && presentes.includes(p.p1) && presentes.includes(p.p2));
-    const turnoColor = allDone?'var(--gray)':anyReady?'#25D366':'var(--lime)';
-    return `
-      <div style="border-bottom:1px solid rgba(26,48,80,.5);padding:6px 14px 2px;background:rgba(0,0,0,.15)">
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:${turnoColor}">
-          ${allDone?'✅':anyReady?'🟢':'🎾'} Turno ${ri+1}
+  const matchesHtml = turnos.map((ronda,ti)=>{
+    const allDone=ronda.every(p=>p.jugado);
+    const anyReady=ronda.some(p=>!p.jugado&&presentes.includes(p.p1)&&presentes.includes(p.p2));
+    const color=allDone?'var(--gray)':anyReady?'#4DFF91':'var(--lime)';
+    const rows=ronda.map(p=>{
+      const pa=t.parejas[p.p1],pb=t.parejas[p.p2];
+      const w1=p.jugado&&p.g1>p.g2,w2=p.jugado&&p.g2>p.g1;
+      const both=!p.jugado&&presentes.includes(p.p1)&&presentes.includes(p.p2);
+      if(p.jugado) return `<div class="tv-m-row jugado">
+        <span class="tv-m-name${w1?' win':''}">${abbr(pa.nombre)}</span>
+        <span class="tv-m-score">${p.g1}-${p.g2}</span>
+        <span class="tv-m-name right${w2?' win':''}">${abbr(pb.nombre)}</span>
+        ${activo?`<button onclick="cancelarResTV('${t.id}',${p.id})" style="background:rgba(255,80,80,.15);border:1px solid rgba(255,80,80,.25);border-radius:3px;color:#ff6060;font-size:9px;font-weight:800;padding:1px 4px;cursor:pointer;flex-shrink:0">✕</button>`:''}
+      </div>`;
+      if(activo) return `<div class="tv-m-row${both?' listo':''}">
+        <span class="tv-m-name">${abbr(pa.nombre)}</span>
+        <span style="display:flex;align-items:center;gap:2px;flex-shrink:0">
+          <input id="tvi1_${safeId}_${p.id}" type="number" min="0" placeholder="0" style="width:26px;text-align:center;font-size:12px;font-weight:800;font-family:'Barlow Condensed',sans-serif;padding:1px 2px;background:rgba(14,29,53,.9);border:1px solid var(--border);border-radius:3px;color:var(--white);outline:none;-moz-appearance:textfield">
+          <span style="color:var(--gray);font-size:9px">-</span>
+          <input id="tvi2_${safeId}_${p.id}" type="number" min="0" placeholder="0" style="width:26px;text-align:center;font-size:12px;font-weight:800;font-family:'Barlow Condensed',sans-serif;padding:1px 2px;background:rgba(14,29,53,.9);border:1px solid var(--border);border-radius:3px;color:var(--white);outline:none;-moz-appearance:textfield">
+          <button data-tid="${t.id}" data-pid="${p.id}" onclick="cargarResTV(this)" style="background:var(--lime);border:none;border-radius:3px;color:var(--navy);font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:9px;padding:2px 5px;cursor:pointer">OK</button>
         </span>
-      </div>
-      ${rows}`;
+        <span class="tv-m-name right">${abbr(pb.nombre)}</span>
+      </div>`;
+      return `<div class="tv-m-row">
+        <span class="tv-m-name">${abbr(pa.nombre)}</span>
+        <span class="tv-m-score pending">vs</span>
+        <span class="tv-m-name right">${abbr(pb.nombre)}</span>
+      </div>`;
+    }).join('');
+    return `<div class="tv-turno-hdr" style="color:${color}">${allDone?'✅':anyReady?'●':'·'} T${ti+1}</div>${rows}`;
   }).join('');
 
-  document.getElementById('tv-body').innerHTML = `
-    <div class="tv-body-scroll">
-    <div class="tv-clasif">
-      <div class="tv-panel">
-        <div class="tv-panel-hdr">📊 Posiciones <span style="font-size:10px;color:var(--gray);font-weight:600">${pj}/${pt} partidos</span></div>
-        <div class="tv-panel-body">${posHtml}</div>
-      </div>
-      <div class="tv-panel">
-        <div class="tv-panel-hdr">🎾 Partidos Clasificación</div>
-        <div class="tv-panel-body">${partsHtml}</div>
-      </div>
+  return `
+    <div class="tv-std-section">
+      <div class="tv-section-title">CLASIFICACIÓN ${pj}/${pt}</div>
+      ${stdHtml}
     </div>
+    <div class="tv-matches-section">
+      <div class="tv-section-title">PARTIDOS</div>
+      <div class="tv-match-list">${matchesHtml}</div>
     </div>`;
 }
 
-// ── BRACKET TIPO MUNDIAL con líneas conectoras ──
-// ── BRACKET TIPO TENIS — slots individuales, espejo, líneas conectoras ──
+// ── BRACKET ELIMINATORIO — panel derecho ──
 function renderTVBracket(t) {
   const activo = t.estado === 'activo';
   const finalP = t.partidos.find(p => p.fase === 'Final');
-  const hasBracket = t.partidos.some(p=>p.fase!=='Clasificación');
-
-  if (!hasBracket) {
-    document.getElementById('tv-body').innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:60%;flex-direction:column;gap:12px;color:var(--gray)"><div style="font-size:48px;opacity:.2">⏳</div><div style="font-size:16px">Generá el cuadro con el botón ⚡</div></div>`;
-    return;
-  }
-
   const campeon = finalP?.jugado ? t.parejas[finalP.g1>finalP.g2?finalP.p1:finalP.p2] : null;
-  const C = 'rgba(74,158,255,.3)'; // color líneas conectoras
+  const C = 'rgba(74,158,255,.28)';
 
-  // ── Nombre de una pareja (o placeholder) ──
   function pName(idx) {
-    if (idx==null) return '<span style="color:var(--gray);font-style:italic;font-weight:400">Por definir</span>';
+    if (idx==null) return '<span style="color:var(--gray);font-style:italic;font-size:10px">Por definir</span>';
     const p = t.parejas[idx];
-    return p ? p.nombre : '<span style="color:var(--gray);font-style:italic">Por definir</span>';
+    return p ? `<span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:.3px">${abbr(p.nombre)}</span>` : '<span style="color:var(--gray);font-style:italic;font-size:10px">?</span>';
   }
 
-  // ── Un slot (fila de un equipo dentro de un match) ──
   function slot(idx, score, isWin, isLoss) {
     const bg = isWin ? 'rgba(181,229,42,.13)' : isLoss ? 'rgba(255,255,255,.02)' : 'transparent';
-    const nameColor = isWin ? 'color:var(--lime);font-weight:700' : isLoss ? 'color:var(--gray);text-decoration:line-through' : 'font-weight:600';
+    const nameColor = isWin ? 'color:var(--lime)' : isLoss ? 'color:var(--gray);text-decoration:line-through' : 'color:var(--white)';
     const scoreColor = isWin ? 'color:var(--lime);font-weight:900' : 'color:var(--gray2)';
-    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:${bg};min-height:42px;border-bottom:1px solid rgba(255,255,255,.06)">
-      <div style="font-size:14px;${nameColor};flex:1;line-height:1.2;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:170px">${pName(idx)}</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;${scoreColor};min-width:24px;text-align:right;margin-left:8px">${score!==null&&score!==undefined?score:''}</div>
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:${bg};min-height:36px;border-bottom:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:12px;${nameColor};flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">${pName(idx)}</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;${scoreColor};min-width:20px;text-align:right;margin-left:6px">${score!=null?score:''}</div>
     </div>`;
   }
 
-  // ── Box de un partido ──
   function matchBox(p, isFinal, isSemi) {
     const border = isFinal ? 'rgba(245,197,66,.45)' : isSemi ? 'rgba(181,229,42,.3)' : 'rgba(255,255,255,.1)';
-    const shadow = isFinal ? '0 0 24px rgba(245,197,66,.15)' : isSemi ? '0 0 14px rgba(181,229,42,.08)' : 'none';
-    const w1 = p?.jugado && p.g1>p.g2, w2 = p?.jugado && p.g2>p.g1;
+    const shadow = isFinal ? '0 0 20px rgba(245,197,66,.15)' : 'none';
+    const w1 = p?.jugado&&p.g1>p.g2, w2 = p?.jugado&&p.g2>p.g1;
     const s1 = p?.jugado?p.g1:null, s2 = p?.jugado?p.g2:null;
     let inp = '';
-    if (p && !p.jugado && activo && p.p1!=null && p.p2!=null) {
-      inp = `<div style="display:flex;align-items:center;gap:4px;padding:6px 11px;background:rgba(0,0,0,.2)">
+    if (p&&!p.jugado&&activo&&p.p1!=null&&p.p2!=null) {
+      inp = `<div style="display:flex;align-items:center;gap:3px;padding:4px 8px;background:rgba(0,0,0,.2)">
         ${tvInpBlock(t.id, p.id)}
       </div>`;
-    } else if (p && p.jugado && activo) {
-      inp = `<div style="display:flex;justify-content:center;padding:6px 11px;background:rgba(0,0,0,.2);border-top:1px solid rgba(255,255,255,.06)">
-        <button onclick="editarRes('${t.id}',${p.id})" style="background:rgba(74,158,255,.15);border:1px solid rgba(74,158,255,.3);border-radius:6px;color:#4a9eff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:11px;padding:5px 14px;cursor:pointer;letter-spacing:.3px">✏️ Corregir</button>
+    } else if (p&&p.jugado&&activo) {
+      inp = `<div style="display:flex;justify-content:center;padding:4px 8px;background:rgba(0,0,0,.2);border-top:1px solid rgba(255,255,255,.05)">
+        <button onclick="editarRes('${t.id}',${p.id})" style="background:rgba(74,158,255,.15);border:1px solid rgba(74,158,255,.3);border-radius:5px;color:#4a9eff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:10px;padding:3px 10px;cursor:pointer">✏️ Corregir</button>
       </div>`;
     }
-    return `<div style="background:rgba(14,29,53,.95);border:1px solid ${border};border-radius:9px;overflow:hidden;box-shadow:${shadow};width:100%">
-      ${p ? slot(p.p1, s1, w1, p.jugado&&!w1) : slot(null,null,false,false)}
-      ${p ? slot(p.p2, s2, w2, p.jugado&&!w2) : slot(null,null,false,false)}
+    return `<div style="background:rgba(14,29,53,.95);border:1px solid ${border};border-radius:7px;overflow:hidden;box-shadow:${shadow};width:100%">
+      ${p?slot(p.p1,s1,w1,p.jugado&&!w1):slot(null,null,false,false)}
+      ${p?slot(p.p2,s2,w2,p.jugado&&!w2):slot(null,null,false,false)}
       ${inp}
     </div>`;
   }
 
-  // ── Connector vertical (pares de matches → siguiente ronda) ──
-  // side: 'left' (ramas salen por la derecha) | 'right' (por la izquierda)
   function vConn(n, side) {
-    const br = side==='left' ? 'right' : 'left';
-    return `<div style="display:flex;flex-direction:column;align-self:stretch;width:22px;flex-shrink:0">
+    const br = side==='left'?'right':'left';
+    return `<div style="display:flex;flex-direction:column;align-self:stretch;width:18px;flex-shrink:0">
       ${Array.from({length:n}).map(()=>`
         <div style="flex:1;display:flex;flex-direction:column">
           <div style="flex:1;border-${br}:1px solid ${C};border-bottom:1px solid ${C};border-radius:${side==='left'?'0 0 5px 0':'0 0 0 5px'}"></div>
           <div style="flex:1;border-${br}:1px solid ${C};border-top:none"></div>
         </div>`).join('')}
     </div>
-    <div style="width:14px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
+    <div style="width:10px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
   }
 
-  // ── Construir columna de fase ──
-  function buildCol(partidos, fase, side) {
+  function buildCol(partidos, fase) {
     const isGold = fase==='Semis'||fase==='Final';
     const lColor = isGold ? 'var(--gold)' : 'rgba(181,229,42,.7)';
-    const colW = 220;
-    return `<div style="display:flex;flex-direction:column;justify-content:space-around;width:${colW}px;gap:10px;flex-shrink:0">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:${lColor};text-align:center;padding:6px 0 7px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:2px">${fase}</div>
-      ${partidos.map((p,i)=>`<div style="flex:1;display:flex;align-items:center">${matchBox(p, fase==='Final', fase==='Semis')}</div>`).join('')}
+    return `<div style="display:flex;flex-direction:column;justify-content:space-around;width:190px;gap:8px;flex-shrink:0">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:${lColor};text-align:center;padding:4px 0 5px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:2px">${fase}</div>
+      ${partidos.map(p=>`<div style="flex:1;display:flex;align-items:center">${matchBox(p,fase==='Final',fase==='Semis')}</div>`).join('')}
     </div>`;
   }
 
-  // ── Obtener partidos de una fase para cada lado ──
   function sidePs(fase, side) {
     const all = t.partidos.filter(p=>p.fase===fase);
     const half = Math.ceil(all.length/2);
-    return side==='left' ? all.slice(0,half) : all.slice(half);
+    return side==='left'?all.slice(0,half):all.slice(half);
   }
 
-  // ── Determinar qué fases existen ──
   const orFases = ['Octavos','Cuartos','Semis'];
   const existFases = orFases.filter(f=>t.partidos.some(p=>p.fase===f));
 
-  // ── Construir lado izquierdo: afuera→centro ──
-  // Visual: Octavos | conn | Cuartos | conn | Semis | line→center
-  function buildLeft() {
-    let html = '<div style="display:flex;align-items:stretch;gap:0">';
-    existFases.forEach((fase, fi) => {
-      const ps = sidePs(fase, 'left');
+  function buildSide(side) {
+    const fases = side==='left' ? existFases : [...existFases].reverse();
+    let html = `<div style="display:flex;align-items:stretch;gap:0">`;
+    if (side==='right') html += `<div style="width:16px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
+    fases.forEach((fase,fi)=>{
+      const ps = sidePs(fase, side);
       if (!ps.length) return;
-      html += buildCol(ps, fase, 'left');
-      if (fi < existFases.length-1) {
-        // connector between this column and next
-        html += vConn(ps.length, 'left');
-        html += `<div style="width:14px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
+      if (side==='left') {
+        html += buildCol(ps, fase);
+        if (fi < fases.length-1) { html += vConn(ps.length,'left'); html += `<div style="width:10px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`; }
+      } else {
+        if (fi>0) { html += `<div style="width:10px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`; html += vConn(sidePs(fases[fi-1],side).length,'right'); }
+        html += buildCol(ps, fase);
       }
     });
-    // line to center
-    html += `<div style="width:20px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
+    if (side==='left') html += `<div style="width:16px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
     html += '</div>';
     return html;
   }
 
-  // ── Construir lado derecho: afuera→centro (Octavos más lejos, Semis más cerca) ──
-  // Visual order from RIGHT to LEFT: Octavos | conn | Cuartos | conn | Semis → center
-  // So HTML order (left to right) must be: line← | Semis | conn | Cuartos | conn | Octavos
-  function buildRight() {
-    // existFases is [Octavos?, Cuartos, Semis] — we want to render Semis first (closest to center)
-    const revFases = [...existFases].reverse(); // [Semis, Cuartos, Octavos?]
-    let html = '<div style="display:flex;align-items:stretch;gap:0">';
-    // First: line from center
-    html += `<div style="width:20px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
-    revFases.forEach((fase, fi) => {
-      const ps = sidePs(fase, 'right');
-      if (!ps.length) return;
-      // connector BEFORE the column (except for first column which connects to center line)
-      if (fi > 0) {
-        // connector: lines come from LEFT side of this column going right
-        html += `<div style="width:14px;border-top:1px solid ${C};align-self:center;flex-shrink:0"></div>`;
-        html += vConn(sidePs(revFases[fi-1],'right').length, 'right');
-      }
-      html += buildCol(ps, fase, 'right');
-    });
-    html += '</div>';
-    return html;
-  }
-
-  // ── Centro: Campeón + Final ──
-  const centerW = 240;
-  let center = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:${centerW}px;flex-shrink:0;padding:0 10px">`;
+  let center = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:210px;flex-shrink:0;padding:0 8px">`;
   if (campeon) {
-    center += `<div style="background:linear-gradient(135deg,rgba(245,197,66,.15),rgba(245,197,66,.03));border:1.5px solid rgba(245,197,66,.4);border-radius:14px;padding:16px;text-align:center;animation:tvglow 2s ease infinite alternate;width:100%">
-      <div style="font-size:34px;margin-bottom:4px">🏆</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:3px">Campeón</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--white);line-height:1.1">${campeon.nombre}</div>
+    center += `<div style="background:linear-gradient(135deg,rgba(245,197,66,.15),rgba(245,197,66,.03));border:1.5px solid rgba(245,197,66,.4);border-radius:12px;padding:12px;text-align:center;animation:tvglow 2s ease infinite alternate;width:100%">
+      <div style="font-size:28px;margin-bottom:3px">🏆</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:2px">CAMPEÓN</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--white);line-height:1.1">${campeon.nombre}</div>
     </div>`;
   }
-  center += `<div style="font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);text-align:center">FINAL</div>`;
-  center += `<div style="width:100%">${matchBox(finalP||null,'Final',false)}</div>`;
+  center += `<div style="font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--gold);text-align:center">FINAL</div>`;
+  center += `<div style="width:100%">${matchBox(finalP||null,true,false)}</div>`;
   center += '</div>';
 
-  document.getElementById('tv-body').innerHTML = `
+  document.getElementById('tv-right-panel').innerHTML = `
     <div id="bracket-scaler-wrap" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden">
       <div id="bracket-scaler" style="display:flex;align-items:center;gap:0;transform-origin:center center">
-        ${buildLeft()}
+        ${buildSide('left')}
         ${center}
-        ${buildRight()}
+        ${buildSide('right')}
       </div>
     </div>`;
-  // Auto-scale para que quepa en pantalla sin scroll
   requestAnimationFrame(() => {
     const wrap = document.getElementById('bracket-scaler-wrap');
     const inner = document.getElementById('bracket-scaler');
-    if(!wrap||!inner) return;
-    const ww = wrap.clientWidth  - 32;
-    const wh = wrap.clientHeight - 32;
-    const iw = inner.scrollWidth;
-    const ih = inner.scrollHeight;
-    const scale = Math.min(1, ww/iw, wh/ih);
+    if (!wrap||!inner) return;
+    const ww = wrap.clientWidth - 24;
+    const wh = wrap.clientHeight - 24;
+    const scale = Math.min(1, ww/inner.scrollWidth, wh/inner.scrollHeight);
     inner.style.transform = `scale(${scale})`;
   });
 }
