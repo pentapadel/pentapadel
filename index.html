@@ -2058,9 +2058,10 @@ window.avanzarFase=(tid)=>{
   // Final
   ps.push({id:finId,fase:'Final',p1:null,p2:null,g1:null,g2:null,jugado:false,tbd:true});
 
-  // Auto-propagar byes: si un cuarto/octavo tiene un equipo y rival nulo, avanzar automáticamente
+  // Auto-propagar byes: solo en Cuartos/Octavos — si un equipo no tiene rival, pasa directo
   ps.forEach(m => {
-    if (m.fase === 'Clasificación' || m.jugado || m.nextPid == null) return;
+    if (m.fase !== 'Cuartos' && m.fase !== 'Octavos') return;
+    if (m.jugado || m.nextPid == null) return;
     if (m.p1 !== null && m.p2 === null) propagateWinner(ps, m, m.p1);
     else if (m.p2 !== null && m.p1 === null) propagateWinner(ps, m, m.p2);
   });
