@@ -1829,6 +1829,7 @@ window.cargarRes=(tid,pid)=>{
   const raw=torneos[tid]; if(!raw) return;
   const t=normT(raw,tid);
   const p=t.partidos.find(p=>p.id===pid);
+  if(!p||p.p1==null||p.p2==null){toast('Partido sin equipos definidos','err');return;}
   const v1=document.getElementById(`g1_${tid}_${pid}`)?.value;
   const v2=document.getElementById(`g2_${tid}_${pid}`)?.value;
   const g1=parseInt(v1), g2=parseInt(v2);
@@ -1857,6 +1858,7 @@ window.editarRes=(tid,pid)=>{
   const t=normT(raw,tid);
   const p=t.partidos.find(x=>x.id===pid); if(!p||!p.jugado) return;
   const pa=t.parejas[p.p1], pb=t.parejas[p.p2];
+  if(!pa||!pb) return;
 
   openModal(
     '✏️ Corregir resultado',
@@ -1909,6 +1911,9 @@ window.editarRes=(tid,pid)=>{
       const oldWin=pOld.g1>pOld.g2?pOld.p1:pOld.p2;
       const newWin=g1new>g2new?pOld.p1:pOld.p2;
       if(oldWin!==newWin&&pOld.fase!=='Clasificación'&&pOld.nextPid!=null){
+        // Limpiar el slot que este partido propagó al siguiente antes de cascadear
+        const ni=ps.findIndex(x=>x.id===pOld.nextPid);
+        if(ni>=0){ps[ni]={...ps[ni],[pOld.nextSlot]:null,tbd:true};}
         clearElimChain(ps,par,pOld.nextPid);
       }
       // Propagar nuevo ganador si hay siguiente ronda
@@ -2052,6 +2057,13 @@ window.avanzarFase=(tid)=>{
 
   // Final
   ps.push({id:finId,fase:'Final',p1:null,p2:null,g1:null,g2:null,jugado:false,tbd:true});
+
+  // Auto-propagar byes: si un cuarto/octavo tiene un equipo y rival nulo, avanzar automáticamente
+  ps.forEach(m => {
+    if (m.fase === 'Clasificación' || m.jugado || m.nextPid == null) return;
+    if (m.p1 !== null && m.p2 === null) propagateWinner(ps, m, m.p1);
+    else if (m.p2 !== null && m.p1 === null) propagateWinner(ps, m, m.p2);
+  });
 
   const nf=nPlayIn>0?'octavos':'cuartos';
   dbUpdateTorneo(tid,{partidos:ps,fase:nf});
@@ -2422,17 +2434,25 @@ window.cancelarResTV = (tid, pid) => {
   const tn = normT(t, tid);
   const p = tn.partidos.find(x => x.id === pid);
   if (!p || !p.jugado) return;
+  if (p.p1==null||p.p2==null) return;
   const pa = tn.parejas[p.p1], pb = tn.parejas[p.p2];
+  if (!pa||!pb) return;
   // Revertir estadísticas
   const ps  = [...tn.partidos];
   const idx = ps.findIndex(x=>x.id===pid);
   const par = JSON.parse(JSON.stringify(tn.parejas));
-  par[p.p1].played--; par[p.p1].gf-=p.g1; par[p.p1].gc-=p.g2;
-  par[p.p2].played--; par[p.p2].gf-=p.g2; par[p.p2].gc-=p.g1;
-  if(p.g1>p.g2){par[p.p1].pts-=2; par[p.p1].wins--;}
-  else{par[p.p2].pts-=2; par[p.p2].wins--;}
+  if(p.p1!=null){par[p.p1].played--; par[p.p1].gf-=p.g1; par[p.p1].gc-=p.g2;}
+  if(p.p2!=null){par[p.p2].played--; par[p.p2].gf-=p.g2; par[p.p2].gc-=p.g1;}
+  if(p.g1>p.g2){if(p.p1!=null){par[p.p1].pts-=2; par[p.p1].wins--;}}
+  else{if(p.p2!=null){par[p.p2].pts-=2; par[p.p2].wins--;}}
   // Limpiar el resultado
   ps[idx] = {...ps[idx], g1:null, g2:null, jugado:false};
+  // Si es partido eliminatorio, limpiar el ganador propagado y cascadear
+  if (p.fase !== 'Clasificación' && p.nextPid != null) {
+    const ni = ps.findIndex(x => x.id === p.nextPid);
+    if (ni >= 0) { ps[ni] = {...ps[ni], [p.nextSlot]: null, tbd: true}; }
+    clearElimChain(ps, par, p.nextPid);
+  }
   dbUpdateTorneo(tid,{partidos:ps,parejas:par});
   toast(`↩️ Resultado cancelado — ${pa.nombre} vs ${pb.nombre}`);
 };
