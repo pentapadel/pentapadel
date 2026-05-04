@@ -2486,7 +2486,7 @@ function finalizarTorneo(tid){
       ps.filter(m=>m.fase==='Octavos'&&m.jugado).forEach(m=>{
         const loser=m.g1>m.g2?m.p2:m.p1; gp(loser,4); // 5 total
       });
-      const dbUpd={'torneos/'+tid+'/finalizado':true};
+      const dbUpd={['torneos/'+tid+'/finalizado']:true};
       Object.entries(updates).forEach(([jid,d])=>{
         dbUpd['jugadores/'+jid+'/puntos']=d.puntos;
         dbUpd['jugadores/'+jid+'/torneosCount']=d.torneosCount;
